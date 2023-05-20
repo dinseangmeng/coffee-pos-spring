@@ -1,7 +1,5 @@
 package com.gic23.coffee_pos.controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -13,34 +11,34 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.gic23.coffee_pos.entity.user;
 import com.gic23.coffee_pos.service.implement.userServiceImp;
+import com.gic23.coffee_pos.util.ResponseUtil;
 
 @RestController
 @CrossOrigin
-@RequestMapping("/user")
+@RequestMapping("api/user")
 public class userController {
-    
+
     @Autowired
     private userServiceImp userService;
 
-
     @GetMapping
-    public List<user> list(){
-        return userService.list();
-        
+    public ResponseUtil list() {
+        return new ResponseUtil("successfull", "list successfull", userService.list());
+
     }
 
     @PostMapping("/register")
-    public user register(@RequestBody user user){
+    public ResponseUtil register(@RequestBody user user) {
         String rawPassword = user.getPassword();
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         String hashedPassword = encoder.encode(rawPassword);
         user.setPassword(hashedPassword);
-        return userService.register(user);
+        return new ResponseUtil("Success", "Register succeefull", userService.register(user));
     }
 
     @GetMapping("/cashier")
-    public List<user> listCasheir(){
-        return userService.listCasheir();
+    public ResponseUtil listCasheir() {
+        return new ResponseUtil("Success", "List casheir", userService.listCasheir());
     }
-    
+
 }

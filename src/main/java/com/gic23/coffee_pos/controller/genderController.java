@@ -1,7 +1,5 @@
 package com.gic23.coffee_pos.controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,20 +10,22 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.gic23.coffee_pos.entity.gender;
 import com.gic23.coffee_pos.service.implement.genderServiceImp;
+import com.gic23.coffee_pos.util.ResponseUtil;
 
 @RestController
 @CrossOrigin
-@RequestMapping("/gender")
+@RequestMapping("api/gender")
 public class genderController {
-    @Autowired genderServiceImp genderService;
+    @Autowired
+    genderServiceImp genderService;
 
     @GetMapping
-    public List<gender> list(){
-        return genderService.list();
+    public ResponseUtil list() {
+        return new ResponseUtil("Success", "Listing Gender", genderService.list());
     }
 
     @PostMapping
-    public gender save(@RequestBody gender gender){
-        return genderService.save(gender);
+    public ResponseUtil save(@RequestBody gender gender) {
+        return new ResponseUtil("Success", "Add new Gender", genderService.save(gender));
     }
 }

@@ -1,7 +1,5 @@
 package com.gic23.coffee_pos.controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,22 +10,24 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.gic23.coffee_pos.entity.role;
 import com.gic23.coffee_pos.service.implement.roleServiceImp;
+import com.gic23.coffee_pos.util.ResponseUtil;
 
 @RestController
 @CrossOrigin
-@RequestMapping("/role")
+@RequestMapping("api/role")
 public class roleController {
-   
-    @Autowired roleServiceImp roleService;
+
+    @Autowired
+    roleServiceImp roleService;
 
     @GetMapping
-    public List<role> list(){
-        return roleService.list();
+    public ResponseUtil list() {
+        return new ResponseUtil("Success", "Listing role", roleService.list());
     }
 
     @PostMapping
-    public role save(@RequestBody role role){
-        return roleService.save(role);
+    public ResponseUtil save(@RequestBody role role) {
+        return new ResponseUtil("Success", "Add role", roleService.save(role));
     }
 
 }

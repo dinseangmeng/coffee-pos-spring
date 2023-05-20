@@ -3,7 +3,9 @@ package com.gic23.coffee_pos.entity;
 import java.util.Date;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -24,10 +26,10 @@ import lombok.ToString;
 @Entity
 @ToString
 public class user {
-    @Id 
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    
+
     private String uid;
 
     private String firstname;
@@ -40,17 +42,25 @@ public class user {
 
     @JsonIgnoreProperties("users")
     @ManyToOne
-    @JoinColumn(name = "roleid",referencedColumnName = "id",insertable = false,updatable = false)
+    @JoinColumn(name = "roleid", referencedColumnName = "id", insertable = false, updatable = false)
     private role roles;
 
     @JsonIgnoreProperties("users")
     @ManyToOne
-    @JoinColumn(name = "genderid",referencedColumnName = "id",insertable = false,updatable = false)
+    @JoinColumn(name = "genderid", referencedColumnName = "id", insertable = false, updatable = false)
     private gender gender;
 
-    
     @JsonIgnoreProperties("user")
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<user_history_recode> history;
 
+    @JsonIgnore
+    public String getPassword() {
+        return this.password;
+    }
+
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    public void setPassword(String password) {
+        this.password = password;
+    }
 }
