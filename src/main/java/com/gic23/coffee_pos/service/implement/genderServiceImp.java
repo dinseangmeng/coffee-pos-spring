@@ -13,9 +13,10 @@ import jakarta.transaction.Transactional;
 
 @Service
 @Transactional
-public class genderServiceImp implements genderService{
-    
-    @Autowired genderRepo eRepository;
+public class genderServiceImp implements genderService {
+
+    @Autowired
+    genderRepo eRepository;
 
     @Override
     public List<gender> list() {
@@ -24,6 +25,7 @@ public class genderServiceImp implements genderService{
 
     @Override
     public gender save(gender gender) {
+
         return eRepository.save(gender);
     }
 }

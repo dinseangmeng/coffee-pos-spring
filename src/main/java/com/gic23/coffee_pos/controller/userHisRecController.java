@@ -5,6 +5,7 @@ package com.gic23.coffee_pos.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -24,4 +25,5 @@ public class userHisRecController {
     public ResponseUtil list() {
         return new ResponseUtil("Successful", "User history", userHisRecService.list());
     }
+
 }

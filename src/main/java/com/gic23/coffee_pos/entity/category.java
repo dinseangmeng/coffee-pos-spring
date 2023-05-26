@@ -1,11 +1,13 @@
 package com.gic23.coffee_pos.entity;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -24,25 +26,24 @@ import lombok.ToString;
 @Builder
 @Entity
 @ToString
-public class user_history_recode {
+public class category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    private Integer userid;
-    private Integer statusid;
+    @Column(unique = true)
+    private String code;
+
+    private Integer typeId;
+
+    @JsonIgnoreProperties("categorys")
+    @ManyToOne
+    @JoinColumn(name = "typeId", referencedColumnName = "id", insertable = false, updatable = false)
+    private type type;
 
     @CreationTimestamp
-    private Date created;
+    private LocalDate created;
 
-    @JsonIgnoreProperties("history")
-    @ManyToOne
-    @JoinColumn(name = "userid", referencedColumnName = "id", insertable = false, updatable = false)
-    private user user;
-
-    @JsonIgnoreProperties("history")
-    @ManyToOne
-    @JoinColumn(name = "statusid", referencedColumnName = "id", insertable = false, updatable = false)
-    private user_history_status status;
-
+    @UpdateTimestamp
+    private LocalDate updated;
 }

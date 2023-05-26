@@ -13,12 +13,18 @@ import jakarta.transaction.Transactional;
 
 @Service
 @Transactional
-public class userHisRecServiceImp implements userHisRecService{
+public class userHisRecServiceImp implements userHisRecService {
     @Autowired
     private userHisRecRepo eRepository;
 
     @Override
     public List<user_history_recode> list() {
         return eRepository.findAll();
-    } 
+    }
+
+    @Override
+    public user_history_recode save(user_history_recode user_history_recode) {
+        // TODO Auto-generated method stub
+        return eRepository.save(user_history_recode);
+    }
 }
