@@ -1,8 +1,9 @@
 package com.gic23.coffee_pos.entity;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -11,7 +12,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -24,25 +25,23 @@ import lombok.ToString;
 @Builder
 @Entity
 @ToString
-public class user_history_recode {
+public class reciept {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    private Integer userid;
-    private Integer statusid;
+    private Integer orderId;
+    private Double receiveMoney;
+    private Double changeMoney;
+
+    @JsonIgnoreProperties("receipt")
+    @OneToOne
+    @JoinColumn(name = "orderId", referencedColumnName = "id", insertable = false, updatable = false)
+    private invoice invoice;
 
     @CreationTimestamp
-    private Date created;
+    private LocalDate created;
 
-    @JsonIgnoreProperties("history")
-    @ManyToOne
-    @JoinColumn(name = "userid", referencedColumnName = "id", insertable = false, updatable = false)
-    private user user;
-
-    @JsonIgnoreProperties("history")
-    @ManyToOne
-    @JoinColumn(name = "statusid", referencedColumnName = "id", insertable = false, updatable = false)
-    private user_history_status status;
-
+    @UpdateTimestamp
+    private LocalDate updated;
 }
