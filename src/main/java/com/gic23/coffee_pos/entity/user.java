@@ -70,7 +70,7 @@ public class user {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<user_history_recode> history;
 
-    @JsonIgnoreProperties("cashier")
+    @JsonIgnoreProperties({ "cashier", "invoiceDetails" })
     @OneToMany(mappedBy = "cashier", cascade = CascadeType.ALL)
     private List<invoice> invoices;
 

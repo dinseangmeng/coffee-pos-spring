@@ -35,7 +35,7 @@ public class zone {
 
     @JsonIgnoreProperties("zone")
     @OneToMany(mappedBy = "zone", cascade = CascadeType.ALL)
-    private List<invoice_detail> invoiceDetails;
+    private List<invoice> invoices;
 
     @CreationTimestamp
     private LocalDate created;
