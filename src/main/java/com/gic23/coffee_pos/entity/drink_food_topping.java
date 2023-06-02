@@ -37,17 +37,17 @@ public class drink_food_topping {
     private Integer productId;
     private Double price;
 
-    @JsonIgnoreProperties("products")
+    @JsonIgnoreProperties({ "products", "type" })
     @ManyToOne
     @JoinColumn(name = "toppingId", referencedColumnName = "id", insertable = false, updatable = false)
     private topping topping;
 
-    @JsonIgnoreProperties("topping")
+    @JsonIgnoreProperties({ "topping", "type", "sizes", "orders" })
     @ManyToOne
     @JoinColumn(name = "productId", referencedColumnName = "id", insertable = false, updatable = false)
     private drink_food drinkFood;
 
-    @JsonIgnoreProperties("topping")
+    @JsonIgnoreProperties({ "topping", "product" })
     @OneToMany(mappedBy = "topping", cascade = CascadeType.ALL)
     private List<invoice_detail> invoiceDetails;
 

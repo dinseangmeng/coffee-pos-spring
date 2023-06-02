@@ -37,10 +37,10 @@ public class invoice_detail {
     private Integer invoiceId;
     private Double surgarRate;
     private Integer toppingId;
-    private Integer zoneId;
+
     private Integer sizeId;
 
-    @JsonIgnoreProperties("orders")
+    @JsonIgnoreProperties({ "orders", "sizes", "topping" })
     @ManyToOne
     @JoinColumn(name = "productId", referencedColumnName = "id", insertable = false, updatable = false)
     private drink_food product;
@@ -50,17 +50,12 @@ public class invoice_detail {
     @JoinColumn(name = "invoiceId", referencedColumnName = "id", insertable = false, updatable = false)
     private invoice invoice;
 
-    @JsonIgnoreProperties("invoiceDetails")
+    @JsonIgnoreProperties({ "invoiceDetails", "drinkFood" })
     @ManyToOne
     @JoinColumn(name = "toppingId", referencedColumnName = "id", insertable = false, updatable = false)
     private drink_food_topping topping;
 
-    @JsonIgnoreProperties("invoiceDetails")
-    @ManyToOne
-    @JoinColumn(name = "zoneId", referencedColumnName = "id", insertable = false, updatable = false)
-    private zone zone;
-
-    @JsonIgnoreProperties("invoiceDetails")
+    @JsonIgnoreProperties({ "invoiceDetails", "drinkFood" })
     @ManyToOne
     @JoinColumn(name = "sizeId", referencedColumnName = "id", insertable = false, updatable = false)
     private drink_food_size size;

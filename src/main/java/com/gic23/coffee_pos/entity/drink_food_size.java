@@ -42,12 +42,12 @@ public class drink_food_size {
     @JoinColumn(name = "sizeId", referencedColumnName = "id", insertable = false, updatable = false)
     private size size;
 
-    @JsonIgnoreProperties("sizes")
+    @JsonIgnoreProperties({ "sizes", "topping", "orders" })
     @ManyToOne
     @JoinColumn(name = "productId", referencedColumnName = "id", insertable = false, updatable = false)
     private drink_food drinkFood;
 
-    @JsonIgnoreProperties("size")
+    @JsonIgnoreProperties({ "size", "product" })
     @OneToMany(mappedBy = "size", cascade = CascadeType.ALL)
     private List<invoice_detail> invoiceDetails;
 

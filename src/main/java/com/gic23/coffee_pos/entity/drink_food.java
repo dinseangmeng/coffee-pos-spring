@@ -42,7 +42,7 @@ public class drink_food {
     private Integer categoryId;
     private Integer typeId;
 
-    @JsonIgnoreProperties("drinks")
+    @JsonIgnoreProperties({ "drinks", "categorys", "topping" })
     @ManyToOne
     @JoinColumn(name = "typeId", referencedColumnName = "id", insertable = false, updatable = false)
     private type type;
