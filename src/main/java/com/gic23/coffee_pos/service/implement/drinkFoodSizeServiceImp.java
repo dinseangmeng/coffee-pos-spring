@@ -24,4 +24,10 @@ public class drinkFoodSizeServiceImp implements drinkFoodSizeService {
         return eRepository.findAll();
     }
 
+    @Override
+    public List<drink_food_size> getByProductId(Integer productId) {
+        // TODO Auto-generated method stub
+        return eRepository.findByProductId(productId);
+    }
+
 }

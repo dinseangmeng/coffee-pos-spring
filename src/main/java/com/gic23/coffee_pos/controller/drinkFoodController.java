@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -27,6 +28,18 @@ public class drinkFoodController {
     @ResponseBody
     public ResponseEntity<List<drink_food>> list() {
         return ResponseEntity.ok().body(drinkFoodService.list());
+    }
+
+    @GetMapping("/{categoryCode}")
+    @ResponseBody
+    public ResponseEntity<List<drink_food>> listByCategoryCode(@PathVariable String categoryCode) {
+        return ResponseEntity.ok().body(drinkFoodService.findByCategoryId(categoryCode));
+    }
+
+    @GetMapping("/count/{categoryCode}")
+    @ResponseBody
+    public ResponseEntity<Long> countByCategoryCode(@PathVariable String categoryCode) {
+        return ResponseEntity.ok().body(drinkFoodService.countByCategoryCode(categoryCode));
     }
 
 }

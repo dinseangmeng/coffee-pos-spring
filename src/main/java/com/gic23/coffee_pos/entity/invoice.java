@@ -35,7 +35,7 @@ public class invoice {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(unique = true)
+    @Column(unique = true, name = "invoice_code")
     private String invoiceCode;
 
     private Double totalPrice;

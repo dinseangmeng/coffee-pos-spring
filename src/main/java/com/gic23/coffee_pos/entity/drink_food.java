@@ -42,6 +42,8 @@ public class drink_food {
     private Integer categoryId;
     private Integer typeId;
 
+    private String imagePath;
+
     @JsonIgnoreProperties({ "drinks", "categorys", "topping" })
     @ManyToOne
     @JoinColumn(name = "typeId", referencedColumnName = "id", insertable = false, updatable = false)
@@ -58,6 +60,11 @@ public class drink_food {
     @JsonIgnoreProperties("product")
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     private List<invoice_detail> orders;
+
+    @JsonIgnoreProperties({ "product", "type" })
+    @ManyToOne
+    @JoinColumn(name = "categoryId", referencedColumnName = "id", insertable = false, updatable = false)
+    private category category;
 
     @CreationTimestamp
     private LocalDate created;

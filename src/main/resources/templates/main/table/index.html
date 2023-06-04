@@ -9,9 +9,14 @@
     <title>Table selection</title>
 </head>
 <body>
-    <div id="container">
-        <div class="left"> 
-            <button th:each="item: ${tables}" th:text="${item.number}" class="btn" th:data-id="${item.id}"  th:classappend="${item.status.status} "></button>
+    <!-- <button th:each="item: ${tables}" th:text="${item.number}" class="btn" th:data-id="${item.id}"  th:classappend="${item.status.status} "></button> -->
+    <form id="container" th:action="@{/v1/invoice/new}" method="post"  >
+        <div class="left" > 
+            <div th:each="item: ${tables}">
+                <input type="radio" th:id="${item.id}" th:value="${item.id}" name="table"  />
+                <label th:for="${item.id}" class="btn"  th:classappend="${item.status.status} " th:data-id="${item.id}" th:text="${item.number}">01</label>
+
+            </div>
 
 
         </div> 
@@ -22,19 +27,17 @@
 
                    <div class="number">
                     Table:&nbsp;&nbsp;
-                    <div class="value">02</div>
+                    <div class="value"></div>
                    </div>
 
                    <div class="status">
                     Status:
-                    <div class="value">available</div>
+                    <div class="value"></div>
                    </div>
 
                    <div class="order">
                     Orders:
                     <div class="value">
-                        <div class="data">Ice americano (R x 1)</div>
-                        <div class="data">Ice mocha (L x 1)</div>
                     </div>
                    </div>
                 </div>
@@ -43,12 +46,13 @@
                 <br>
                 <br>
                 <div class="btn">
-              
+                    <button class="paid hide" onclick="preventSubmit(event)"> Paid</button>
+                    <button class="clear hide" onclick="preventSubmit(event)">Free table</button>
                     <button>Next</button>
                 </div>
             </div>
         </div>
-    </div>
+    </form>
     <!-- <h1>Hello world</h1> -->
 </body>
 </html>

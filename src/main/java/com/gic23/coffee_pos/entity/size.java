@@ -32,6 +32,7 @@ public class size {
     private Integer id;
 
     private String name;
+    private String short_name;
 
     @CreationTimestamp
     private LocalDate created;

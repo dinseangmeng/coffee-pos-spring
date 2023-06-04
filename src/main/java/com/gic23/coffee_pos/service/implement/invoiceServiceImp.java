@@ -22,4 +22,9 @@ public class invoiceServiceImp implements invoiceService {
         // TODO Auto-generated method stub
         return eRepository.findAll();
     }
+
+    @Override
+    public invoice getByInvoiceCode(String invoiceCode) {
+        return eRepository.findByInvoiceCode(invoiceCode);
+    }
 }

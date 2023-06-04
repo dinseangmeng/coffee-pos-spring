@@ -41,6 +41,10 @@ public class tables {
     @JoinColumn(name = "statusId", referencedColumnName = "id", insertable = false, updatable = false)
     private table_status status;
 
+    @JsonIgnoreProperties({ "tables", "receipt", "cashier" })
+    @OneToMany(mappedBy = "tables", cascade = CascadeType.ALL)
+    private List<invoice> invoices;
+
     @CreationTimestamp
     private LocalDate created;
 

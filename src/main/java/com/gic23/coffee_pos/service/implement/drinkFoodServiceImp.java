@@ -20,8 +20,25 @@ public class drinkFoodServiceImp implements drinkFoodService {
 
     @Override
     public List<drink_food> list() {
-        // TODO Auto-generated method stub
         return eRepository.findAll();
+    }
+
+    @Override
+    public List<drink_food> findByCategoryId(String categoryId) {
+        // TODO Auto-generated method stub
+        return eRepository.findByCategoryCode(categoryId);
+    }
+
+    @Override
+    public Long countByCategoryCode(String categoryId) {
+        // TODO Auto-generated method stub
+        return eRepository.countByCategoryCode(categoryId);
+    }
+
+    @Override
+    public Long countAll() {
+        // TODO Auto-generated method stub
+        return eRepository.count();
     }
 
 }
