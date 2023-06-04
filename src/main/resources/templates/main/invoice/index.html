@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/main/invoice/css/loading.css}" />
+    <link rel="stylesheet" th:href="@{/main/invoice/css/empty_error.css }" />
+    <link rel="stylesheet" th:href="@{/main/invoice/css/style.css}" />
+    <script th:src="@{/main/invoice/js/app.js}" defer></script>
+
+    <title>Order</title>
+</head>
+<body>
+    <div th:text="${tablecode}"></div>
+        <div id="container">
+            <div class="left">
+                <div class="scroller">
+                    <div class="arrow_left">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+                          </svg>
+                    </div>
+                    <div class="menu">
+                            <a  th:attr="href=@{'/v1/invoice/view/'+${invoiceCode}}" th:data-count="${n_product}" class="item" th:classappend="${''==categoryCode}?  'active' :''" >All</a>
+                            <a th:attr="href=@{'/v1/invoice/view/'+${invoiceCode}} +'/' +${item.category.code}" th:data-count="${item.drink_count}" class="item" th:each="item: ${categorys}" th:text="${item.category.name}" th:classappend="${item.category.code==categoryCode}?  'active' :''"></a>
+                    </div>
+                    <div class=" arrow_right">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                          </svg>
+                          
+                    </div>
+                </div>
+
+                <br>
+                <h2 style="text-align: left; width: 95%;" th:text="${TextCategory}"></h2>
+                <hr>
+                <br>
+                <div class="menu_item"  th:if="${!isProductEmpty}">
+                    <div class="product" th:each="item: ${products}" th:data-id='${item.id}' th:data-name="${item.name}">
+                        <div class="contain" >
+                            <img th:src="@{'/images' + ${item.imagePath}}" alt="coffee">
+                            <h1 th:text="${item.name}"></h1>
+                            
+                        </div>
+                    </div>
+                    
+                </div>
+                <div th:if="${isProductEmpty}" class="empty_error">
+                    <img th:src="@{/images/icons/empty.png}" alt="empty">
+                    <h2 >Category is Empty</h2>
+                </div>
+            </div>
+            
+            <div class="line"></div>
+            <div class="right">
+                <h1>Order information</h1>
+               
+                <div class="table" > 
+                    <table th:if="${invoice.invoiceDetails}">
+                        <tr>
+                            <th class="num">N<sup>o</sup></th>
+                            <th >Name</th>
+                            <th style="text-align: center;">Size</th>
+                            <th style="text-align: center;">Quantity</th>
+                            <th style="text-align: center;">unit Price</th>
+                            <th style="text-align: center;">Sub Price</th>
+                            <th class="action">Action</th>
+                        </tr>
+                        <tr th:each="item , iter  : ${invoice.invoiceDetails}">
+                            <td class="num" th:text="${iter.index +1}"></td>
+                            <td th:text="${item.product.name}"></td>
+                            <td th:text="${item.size.size.short_name}" style="text-align: center;">R</td>
+                            <td th:text="${item.quantity}" style="text-align: center;"></td>
+                            <td th:text="${item.unitPrice}" style="text-align: center;"></td>
+                            <td th:text="${item.unitPrice * item.quantity} " style="text-align: center;"></td>
+                            <td class="action">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 see">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z" />
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                  </svg>
+                                  
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 edit">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125" />
+                                  </svg>
+                                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 trash">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
+                                  </svg>
+                                                                
+                            </td>
+                        </tr>
+                        
+                       
+                    </table>
+                </div>
+               
+                <div class="btn">
+              
+                    <a th:href="@{/v1/tables}">Prev</a>
+                    <div class="btn_right">
+                        <button data-receipt>Print Recipt</button>
+                        <button>Save</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="popup">
+            <div class="popup_container">
+
+                <div class="lds-dual-ring"></div>
+            </div>
+            <div class="btn">
+                <button class="cancel">Cancel</button>
+                <button>Ok</button>
+            </div>
+        </div>
+
+        <div class="popup_calculator">
+            <div class="calculator">
+                <div class="screen">
+                    <p data-screen>00.00</p>
+                    <div class="output">
+                        <div class="total">
+                            <div class="label">
+                                Total:
+                            </div>
+                            <span th:data-total="${invoice.totalPrice}" th:text="${invoice.totalPrice}">20</span>
+                        </div>
+                        <div class="change">
+                            <div class="label">Change:</div> 
+                            <span data-change="0">0.00</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="cal_btn">
+                    <button class="number" data-number="1" data-1>1</button>
+                    <button class="number" data-number="2" data-2>2</button>
+                    <button class="number" data-number="3" data-3>3</button>
+                    <button class="number" data-number="4" data-4>4</button>
+                    <button class="number" data-number="5" data-5>5</button>
+                    <button class="number" data-number="6" data-6>6</button>
+                    <button class="number" data-number="7" data-7>7</button>
+                    <button class="number" data-number="8" data-8>8</button>
+                    <button class="number" data-number="9" data-9>9</button>
+                    <button class="number" data-number="." data-dot>.</button>
+                    <button class="number" data-number="0" data-0>0</button>
+                    
+                    <button class="operand delete" data-delete>Delete</button>
+                    <button class="operand ok" data-ok>Ok</button>
+                    <button class="operand cancel" data-cancel>Cancel</button>
+                </div>
+            </div>
+        </div>
+</body>
+</html>

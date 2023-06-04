@@ -23,4 +23,10 @@ public class drinkFoodToppingServiceImp implements drinkFoodToppingService {
         return eRepository.findAll();
     }
 
+    @Override
+    public List<drink_food_topping> getByProductId(Integer productId) {
+        // TODO Auto-generated method stub
+        return eRepository.findByProductId(productId);
+    }
+
 }
