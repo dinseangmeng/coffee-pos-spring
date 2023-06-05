@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script th:src="@{https://cdn.jsdelivr.net/npm/sweetalert2@11}"  defer></script>
+    <link rel="stylesheet" th:href="@{/main/table/css/loader.css}" />
     <link rel="stylesheet" th:href="@{/main/table/css/style.css}" />
     <script th:src="@{/main/table/js/app.js}" defer></script>
     <title>Table selection</title>
@@ -15,31 +17,31 @@
             <div th:each="item: ${tables}">
                 <input type="radio" th:id="${item.id}" th:value="${item.id}" name="table"  />
                 <label th:for="${item.id}" class="btn"  th:classappend="${item.status.status} " th:data-id="${item.id}" th:text="${item.number}">01</label>
-
+       
             </div>
-
-
+            <input type="hidden" value="" name="invoiceId" class="invoice_id">
+            
         </div> 
         <div class="right">
-            <div class="infor">
+            <div class="infor"> 
                 <h1>Table Infor</h1>
                 <div class="content">
-
-                   <div class="number">
-                    Table:&nbsp;&nbsp;
-                    <div class="value"></div>
-                   </div>
-
-                   <div class="status">
-                    Status:
-                    <div class="value"></div>
-                   </div>
-
-                   <div class="order">
-                    Orders:
-                    <div class="value">
+                    <div class="number">
+                        Table:&nbsp;&nbsp;
+                        <div class="value"></div>
                     </div>
-                   </div>
+                    
+                    <div class="status">
+                        Status:
+                        <div class="value"></div>
+                    </div>
+                    
+                    <div class="order">
+                        Orders:
+                        <div class="value">
+                        </div>
+                    </div>
+                    
                 </div>
                 <br>
                 <br>
@@ -48,7 +50,7 @@
                 <div class="btn">
                     <button class="paid hide" onclick="preventSubmit(event)"> Paid</button>
                     <button class="clear hide" onclick="preventSubmit(event)">Free table</button>
-                    <button>Next</button>
+                    <button class="next">Next</button>
                 </div>
             </div>
         </div>

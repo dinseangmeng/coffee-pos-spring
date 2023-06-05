@@ -61,6 +61,11 @@ body #container .left .btn:hover {
   background-color: #fcead1;
   color: black;
 }
+
+body #container .left .btn.active{
+  background-color: #fcead1;
+  color: black;
+}
 body #container .left .btn.selected {
   background-color: #fcead1;
   color: black;
@@ -85,14 +90,23 @@ body #container .right .infor {
   text-align: center;
 }
 body #container .right .infor .content {
-  width: 100%;
+  
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  
 }
+
 body #container .right .infor .content > div {
-  width: 100%;
+ 
   display: flex;
   gap: 1rem;
   font-weight: bold;
   font-size: 1.2rem;
+}
+body #container .right .infor .content > div:not(.lds-facebook) {
+    width: 100%;
 }
 body #container .right .infor .content > div .value {
   display: flex;

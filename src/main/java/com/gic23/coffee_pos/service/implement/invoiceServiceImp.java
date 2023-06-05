@@ -27,4 +27,10 @@ public class invoiceServiceImp implements invoiceService {
     public invoice getByInvoiceCode(String invoiceCode) {
         return eRepository.findByInvoiceCode(invoiceCode);
     }
+
+    @Override
+    public invoice Save(invoice invoice) {
+        // TODO Auto-generated method stub
+        return eRepository.save(invoice);
+    }
 }

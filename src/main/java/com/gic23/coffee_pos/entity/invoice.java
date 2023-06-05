@@ -43,7 +43,8 @@ public class invoice {
     private Double exchangeRate;
     private Integer cashierId;
     private Integer tableId;
-    private Integer zoneId;
+
+    private Integer statusId;
 
     @JsonIgnoreProperties({ "invoices", "history" })
     @ManyToOne
@@ -55,6 +56,11 @@ public class invoice {
     @JoinColumn(name = "tableId", referencedColumnName = "id", insertable = false, updatable = false)
     private tables tables;
 
+    @JsonIgnoreProperties("invoices")
+    @ManyToOne
+    @JoinColumn(name = "statusId", referencedColumnName = "id", insertable = false, updatable = false)
+    private invoice_status status;
+
     @JsonIgnoreProperties("invoice")
     @OneToMany(mappedBy = "invoice", cascade = CascadeType.ALL)
     private List<invoice_detail> invoiceDetails;
@@ -62,11 +68,6 @@ public class invoice {
     @JsonIgnoreProperties("invoice")
     @OneToOne(mappedBy = "invoice", cascade = CascadeType.ALL)
     private reciept receipt;
-
-    @JsonIgnoreProperties("invoices")
-    @ManyToOne
-    @JoinColumn(name = "zoneId", referencedColumnName = "id", insertable = false, updatable = false)
-    private zone zone;
 
     @CreationTimestamp
     private LocalDate created;

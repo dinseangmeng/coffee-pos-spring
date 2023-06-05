@@ -20,7 +20,22 @@ public class invoiceDetailServiceImp implements invoiceDetailService {
 
     @Override
     public List<invoice_detail> list() {
-        // TODO Auto-generated method stub
         return eRepository.findAll();
+    }
+
+    @Override
+    public invoice_detail save(invoice_detail invoice_detail) {
+        return eRepository.save(invoice_detail);
+    }
+
+    @Override
+    public invoice_detail getById(Integer id) {
+        return eRepository.findById(id).get();
+    }
+
+    @Override
+    public String deleteById(Integer id) {
+        eRepository.deleteById(id);
+        return "Delete Successfull";
     }
 }

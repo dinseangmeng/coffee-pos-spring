@@ -8,4 +8,6 @@ public interface drinkFoodSizeService {
     List<drink_food_size> list();
 
     List<drink_food_size> getByProductId(Integer productId);
+
+    drink_food_size getById(Integer id);
 }

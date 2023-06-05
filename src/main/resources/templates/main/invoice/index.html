@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script th:src="@{https://cdn.jsdelivr.net/npm/sweetalert2@11}"  defer></script>
     <link rel="stylesheet" th:href="@{/main/invoice/css/loading.css}" />
     <link rel="stylesheet" th:href="@{/main/invoice/css/empty_error.css }" />
     <link rel="stylesheet" th:href="@{/main/invoice/css/style.css}" />
@@ -58,14 +59,13 @@
                 <h1>Order information</h1>
                
                 <div class="table" > 
-                    <table th:if="${invoice.invoiceDetails}">
+                    <table class="table_invoice_infor" th:if="${invoice.invoiceDetails}">
                         <tr>
                             <th class="num">N<sup>o</sup></th>
                             <th >Name</th>
                             <th style="text-align: center;">Size</th>
                             <th style="text-align: center;">Quantity</th>
                             <th style="text-align: center;">unit Price</th>
-                            <th style="text-align: center;">Sub Price</th>
                             <th class="action">Action</th>
                         </tr>
                         <tr th:each="item , iter  : ${invoice.invoiceDetails}">
@@ -74,17 +74,12 @@
                             <td th:text="${item.size.size.short_name}" style="text-align: center;">R</td>
                             <td th:text="${item.quantity}" style="text-align: center;"></td>
                             <td th:text="${item.unitPrice}" style="text-align: center;"></td>
-                            <td th:text="${item.unitPrice * item.quantity} " style="text-align: center;"></td>
                             <td class="action">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 see">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" th:data-id='${item.product.id}' th:data-detail-id="${item.id}" th:data-name="${item.product.name}" th:data-qty="${item.quantity}" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class=" w-6 h-6 see" >
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z" />
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                                   </svg>
-                                  
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 edit">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125" />
-                                  </svg>
-                                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 trash">
+                                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"  th:data-invoicecode="${invoiceCode}"  th:data-categorycode="${categoryCode}" th:data-detail-id="${item.id}" stroke="currentColor" class="w-6 h-6 trash">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
                                   </svg>
                                                                 
@@ -105,16 +100,18 @@
                 </div>
             </div>
         </div>
-        <div class="popup">
+        <form class="popup" th:data-invoiceid="${invoice.id}" th:action="@{/v1/invoiceDetail/new}" method="POST" th:object="${invoice_detail}">
             <div class="popup_container">
 
                 <div class="lds-dual-ring"></div>
             </div>
+            <input type="hidden" name="invoiceCode"  th:value="${invoiceCode}">
+            <input type="hidden" name="categoryCode" th:value="${categoryCode}">
             <div class="btn">
                 <button class="cancel">Cancel</button>
-                <button>Ok</button>
+                <button class="edit_invoice_detail">Ok</button>
             </div>
-        </div>
+        </form>
 
         <div class="popup_calculator">
             <div class="calculator">

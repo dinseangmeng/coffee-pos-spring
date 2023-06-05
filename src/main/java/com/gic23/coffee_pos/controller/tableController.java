@@ -38,10 +38,19 @@ public class tableController {
 
     @GetMapping("/{id}")
     @ResponseBody
-    public ResponseEntity<Optional<tables>> Test(Model model, @PathVariable("id") Integer id) {
+    public ResponseEntity<Object> Test(Model model, @PathVariable("id") Integer id) {
         Optional<tables> data = tableService.getById(id);
-        if (data.get().getInvoices().size() > 0) {
-            invoice lastInvoice = data.get().getInvoices().get((data.get().getInvoices().size() - 1));
+        List<invoice> notPaidInvoice = new ArrayList<>();
+        for (invoice item : data.get().getInvoices()) {
+            if (item.getStatus().getId() != 2) {
+
+                notPaidInvoice.add(item);
+            }
+        }
+        // log.info("Test {}", notPaidInvoice);
+        if (notPaidInvoice.size() > 0) {
+            log.info("It run here");
+            invoice lastInvoice = notPaidInvoice.get((notPaidInvoice.size() - 1));
             List<invoice> invoices = new ArrayList<>(Arrays.asList(
                     lastInvoice));
             data.get().setInvoices(invoices);

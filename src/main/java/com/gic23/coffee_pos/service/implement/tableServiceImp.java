@@ -30,4 +30,10 @@ public class tableServiceImp implements tableService {
         // TODO Auto-generated method stub
         return eRepository.findById(id);
     }
+
+    @Override
+    public tables save(tables table) {
+        // TODO Auto-generated method stub
+        return eRepository.save(table);
+    }
 }

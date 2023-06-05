@@ -1,6 +1,7 @@
 package com.gic23.coffee_pos.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -15,10 +16,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.gic23.coffee_pos.entity.category;
 import com.gic23.coffee_pos.entity.drink_food;
 import com.gic23.coffee_pos.entity.invoice;
+import com.gic23.coffee_pos.entity.tables;
 import com.gic23.coffee_pos.dto.CategoryWithDrinkCount;
 import com.gic23.coffee_pos.service.implement.categoryServiceImp;
 import com.gic23.coffee_pos.service.implement.drinkFoodServiceImp;
 import com.gic23.coffee_pos.service.implement.invoiceServiceImp;
+import com.gic23.coffee_pos.service.implement.tableServiceImp;
 
 import org.springframework.ui.Model;
 import lombok.extern.slf4j.Slf4j;
@@ -39,6 +42,9 @@ public class invoiceController {
         this.drinkFoodService = drinkFoodService;
         this.categoryService = categoryService;
     }
+
+    @Autowired
+    private tableServiceImp tableService;
 
     @GetMapping("/view/{invoiceCode}")
     public String invoiceView(@PathVariable String invoiceCode, Model model) {
@@ -92,10 +98,30 @@ public class invoiceController {
     }
 
     @PostMapping("/new")
-    @ResponseBody
-    public ResponseEntity<Integer> newOrder(@RequestParam("table") Integer table) {
+    public String newOrder(@RequestParam("table") Integer table,
+            @RequestParam("invoiceId") String invoiceId) {
+        if (!invoiceId.isEmpty()) {
+            return "redirect:/v1/invoice/view/" + invoiceId;
+        }
 
-        return ResponseEntity.ok().body(table);
+        invoice newInvoice = invoice
+                .builder()
+                .cashierId(1)
+                .discount(0.0)
+                .exchangeRate(4100.0)
+                .invoiceCode(null)
+                .statusId(1)
+                .tableId(table)
+                .totalPrice(null)
+                .build();
+
+        invoice savedInvoice = invoiceService.Save(newInvoice);
+        Optional<tables> existedTable = tableService.getById(table);
+        existedTable.get().setStatusId(2);
+        tableService.save(existedTable.get());
+        savedInvoice.setInvoiceCode("ORD000" + savedInvoice.getId());
+        invoiceService.Save(savedInvoice);
+        return "redirect:/v1/invoice/view/" + savedInvoice.getInvoiceCode();
     }
 
 }

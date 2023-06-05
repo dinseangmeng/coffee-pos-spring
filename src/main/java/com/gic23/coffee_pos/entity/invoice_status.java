@@ -13,6 +13,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -26,16 +28,16 @@ import lombok.ToString;
 @Builder
 @Entity
 @ToString
-public class zone {
+public class invoice_status {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private String zoneCode;
-    private String name;
+    private String status;
 
-    @JsonIgnoreProperties("zone")
-    @OneToMany(mappedBy = "zone", cascade = CascadeType.ALL)
-    private List<invoice_detail> invoiceDetails;
+    @JsonIgnoreProperties("status")
+    @OneToMany(mappedBy = "status", cascade = CascadeType.ALL)
+    private List<invoice> invoices;
 
     @CreationTimestamp
     private LocalDate created;

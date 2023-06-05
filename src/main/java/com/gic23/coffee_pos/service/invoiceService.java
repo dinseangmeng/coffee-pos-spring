@@ -8,4 +8,6 @@ public interface invoiceService {
     List<invoice> list();
 
     invoice getByInvoiceCode(String invoiceCode);
+
+    invoice Save(invoice invoice);
 }

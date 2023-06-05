@@ -371,9 +371,13 @@ body .popup_container .cover .size {
   justify-content: center;
   align-items: center;
 }
+body .popup_container .cover .size.active{
+  background-color: #fcbd65;
+}
 body .popup_container .cover .size:hover {
   background-color: #ffc675;
 }
+
 body .popup_container .cover::after {
   content: attr(data-label);
   position: absolute;
@@ -546,3 +550,15 @@ body .popup_calculator .calculator .cal_btn > button.cancel {
   grid-column: 3/4;
   background-color: #ffc675;
 }/*# sourceMappingURL=style.css.map */
+
+.input_quantity{
+  padding: .3rem;
+  border: none;
+  outline: none;
+  font-size: 1.2rem;
+}
+.flex.con{
+  display: flex !important;
+  flex-direction: row !important;
+  gap: 1rem;
+}
