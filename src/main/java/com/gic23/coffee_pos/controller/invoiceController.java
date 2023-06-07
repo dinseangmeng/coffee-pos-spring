@@ -131,7 +131,7 @@ public class invoiceController {
     public String newOrder(@RequestParam("table") Integer table,
             @RequestParam("invoiceId") String invoiceId) {
         if (!invoiceId.isEmpty()) {
-            return "redirect:/v1/invoice/view/" + invoiceId;
+            return "redirect:/v1/invoice/view/" + invoiceId + "/2";
         }
 
         invoice newInvoice = invoice
