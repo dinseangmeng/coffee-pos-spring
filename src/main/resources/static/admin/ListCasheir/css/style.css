@@ -1,0 +1,173 @@
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  min-width: 100vw;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  justify-content: center;
+}
+body #container {
+  min-width: 100%;
+  min-height: 100vh;
+  display: grid;
+  grid-template-rows: auto 1fr;
+  align-items: center;
+  background-color: #f1f1f1;
+}
+body #container .menu_bar {
+  width: 100%;
+  height: auto;
+  background-color: white;
+  padding: 0.5rem 0.7rem;
+  display: flex;
+}
+body #container .menu_bar .menu_item {
+  padding: 0 1rem;
+}
+body #container .menu_bar .menu_item a {
+  text-decoration: none;
+  color: black;
+  padding: 0.3rem 0.7rem;
+  font-weight: bold;
+  transition: 300ms;
+  border-radius: 0.2rem;
+}
+body #container .menu_bar .menu_item:hover a {
+  background-color: #a7a7a7;
+}
+body #container .menu_bar .menu_item + .menu_item {
+  border-left: 2px solid #a7a7a7;
+}
+body #container #sub_container {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+}
+body #container #sub_container .left {
+  height: 100%;
+  background-color: #adadad;
+}
+body #container #sub_container .left .tap_container {
+  display: flex;
+  gap: 1rem;
+  padding: 0.5rem 0;
+  padding-left: 2rem;
+  padding-top: 1rem;
+  background-color: #adadad;
+}
+body #container #sub_container .left .tap_container .tap {
+  transition: 300ms;
+}
+body #container #sub_container .left .tap_container .tap a {
+  text-decoration: none;
+  color: rgb(0, 0, 0);
+  font-weight: bold;
+  background-color: #cfcfcf;
+  padding: 0.4rem 2rem;
+  border: 2px solid black;
+  border-bottom: none;
+  border-radius: 0.6rem 0.6rem 0 0;
+  transition: 300ms;
+}
+body #container #sub_container .left .tap_container .tap:hover {
+  scale: 1.1;
+}
+body #container #sub_container .left .tap_container .tap:hover a {
+  background-color: rgb(255, 255, 255);
+}
+body #container #sub_container .left .tap_container .tap.active {
+  scale: 1.1;
+}
+body #container #sub_container .left .tap_container .tap.active a {
+  background-color: rgb(255, 255, 255);
+}
+body #container #sub_container .left .table {
+  display: flex;
+  width: 100%;
+  padding: 1rem;
+}
+body #container #sub_container .left .table table {
+  width: 100%;
+  border-collapse: collapse;
+}
+body #container #sub_container .left .table table tr th {
+  text-align: left;
+  padding: 0.4rem 1rem;
+}
+body #container #sub_container .left .table table tr td {
+  padding: 0.4rem 1rem;
+  font-size: 1.1rem;
+}
+body #container #sub_container .left .table table tr td.action {
+  text-align: left;
+  padding: 0.6rem 0;
+  display: flex;
+  align-items: center;
+}
+body #container #sub_container .left .table table tr td.action svg {
+  cursor: pointer;
+  padding-left: 2rem;
+  --size:3.7rem;
+  width: var(--size);
+}
+body #container #sub_container .left .table table tr td.action svg:hover {
+  color: blue;
+}
+body #container #sub_container .left .table table tr:nth-child(2n) {
+  background-color: #ff8c00;
+}
+body #container #sub_container .left .table table tr:nth-child(2n+1) {
+  background-color: #ffa537;
+}
+body #container #sub_container .left .table table tr:first-child {
+  background-color: #ffc400;
+}
+body #container #sub_container .right {
+  padding: 1rem;
+  background-color: #ffa537;
+  display: flex;
+  flex-direction: column;
+}
+body #container #sub_container .right h1 {
+  text-align: center;
+}
+body #container #sub_container .right .infor {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2rem;
+}
+body #container #sub_container .right .infor_left {
+  width: 100%;
+}
+body #container #sub_container .right .infor_left .img {
+  width: 100%;
+  border-radius: 0.5rem;
+  overflow: hidden;
+}
+body #container #sub_container .right .infor_left .img img {
+  width: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+body #container #sub_container .right .infor_right {
+  padding-top: 2rem;
+  font-size: 1.2rem;
+  display: flex;
+  gap: 1rem;
+}
+body #container #sub_container .right .infor_right_1, body #container #sub_container .right .infor_right_2 {
+  font-weight: bold;
+}
+body #container #sub_container .right .data {
+  display: flex;
+  gap: 1rem;
+  font-size: 1.2rem;
+}/*# sourceMappingURL=style.css.map */

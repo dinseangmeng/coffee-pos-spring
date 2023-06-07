@@ -14,22 +14,28 @@ import jakarta.transaction.Transactional;
 @Service
 @Transactional
 public class userServiceImp implements userService {
-    
+
     @Autowired
     private userRepo eRepository;
-    
+
     @Override
     public List<user> list() {
         return eRepository.findAll();
     }
-    
+
     @Override
-    public user register(user user) {
+    public user save(user user) {
         return eRepository.save(user);
     }
 
     @Override
     public List<user> listCasheir() {
         return eRepository.findByroleid(2);
+    }
+
+    @Override
+    public user findById(Integer id) {
+        // TODO Auto-generated method stub
+        return eRepository.findById(id).get();
     }
 }

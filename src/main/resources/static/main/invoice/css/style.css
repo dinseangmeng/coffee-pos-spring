@@ -17,6 +17,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
 }
 body #container {
   width: 100%;
@@ -38,6 +39,35 @@ body #container > div {
     height: 100vh;
   }
 }
+body #container .type{
+  padding-left: 2rem ;
+  display: flex;
+  width: 100%;
+  gap: 2rem;
+}
+body #container .type .type_item{
+  background-color: #fcbd65;
+  padding: .6rem 1rem;
+  padding-bottom: 0;
+  border-radius: .5rem .5rem 0 0;
+  text-decoration: none;
+  color: black;
+  transition: 300ms;
+  font-weight: bold;
+  z-index: 1;
+}
+body #container .type .type_item.active{
+  box-shadow: 0 0 0 2px black;
+  transform: scale(1.2);
+
+}
+body #container .type .type_item.active:hover{
+  box-shadow: 0 0 0 2px rgb(0, 123, 255);
+}
+body #container .type .type_item:hover{
+  box-shadow: 0 0 0 2px black;
+  transform: scale(1.2);
+}
 body #container .left {
   height: 100%;
   display: flex;
@@ -45,6 +75,7 @@ body #container .left {
   align-items: center;
   padding: 1rem;
   overflow: auto;
+
 }
 body #container .left > div {
   width: 100%;
@@ -53,6 +84,7 @@ body #container .left .scroller {
   display: grid;
   align-items: center;
   grid-template-columns: auto 1fr auto;
+  z-index: 2;
 }
 body #container .left .scroller .arrow_right, body #container .left .scroller .arrow_left {
   display: flex;
@@ -151,6 +183,7 @@ body #container .left .menu_item .product {
   width: 100%;
   height: 10rem;
   cursor: pointer;
+  border-radius: .3rem;
 }
 body #container .left .menu_item .product:hover img {
   transform: scale(1.1);
@@ -371,9 +404,13 @@ body .popup_container .cover .size {
   justify-content: center;
   align-items: center;
 }
+body .popup_container .cover .size.active{
+  background-color: #fcbd65;
+}
 body .popup_container .cover .size:hover {
   background-color: #ffc675;
 }
+
 body .popup_container .cover::after {
   content: attr(data-label);
   position: absolute;
@@ -546,3 +583,15 @@ body .popup_calculator .calculator .cal_btn > button.cancel {
   grid-column: 3/4;
   background-color: #ffc675;
 }/*# sourceMappingURL=style.css.map */
+
+.input_quantity{
+  padding: .3rem;
+  border: none;
+  outline: none;
+  font-size: 1.2rem;
+}
+.flex.con{
+  display: flex !important;
+  flex-direction: row !important;
+  gap: 1rem;
+}

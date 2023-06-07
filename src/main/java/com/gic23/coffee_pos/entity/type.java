@@ -1,6 +1,7 @@
 package com.gic23.coffee_pos.entity;
 
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 import org.hibernate.annotations.CreationTimestamp;
@@ -33,17 +34,17 @@ public class type {
 
     private String name;
 
-    @JsonIgnoreProperties("type")
-    @OneToMany(mappedBy = "type", cascade = CascadeType.ALL)
-    private List<category> categorys;
+    // @JsonIgnoreProperties("type")
+    // @OneToMany(mappedBy = "type", cascade = CascadeType.ALL)
+    // private List<category> categorys;
 
-    @JsonIgnoreProperties("type")
-    @OneToMany(mappedBy = "type", cascade = CascadeType.ALL)
-    private List<drink_food> drinks;
+    // @JsonIgnoreProperties("type")
+    // @OneToMany(mappedBy = "type", cascade = CascadeType.ALL)
+    // private List<drink_food> drinks;
 
-    @JsonIgnoreProperties("type")
-    @OneToMany(mappedBy = "type", cascade = CascadeType.ALL)
-    private List<topping> topping;
+    // @JsonIgnoreProperties("type")
+    // @OneToMany(mappedBy = "type", cascade = CascadeType.ALL)
+    // private List<topping> topping;
 
     @CreationTimestamp
     private LocalDate created;

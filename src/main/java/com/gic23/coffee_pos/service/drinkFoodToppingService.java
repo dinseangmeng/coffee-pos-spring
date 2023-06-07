@@ -8,4 +8,6 @@ public interface drinkFoodToppingService {
     List<drink_food_topping> list();
 
     List<drink_food_topping> getByProductId(Integer productId);
+
+    drink_food_topping getById(Integer id);
 }

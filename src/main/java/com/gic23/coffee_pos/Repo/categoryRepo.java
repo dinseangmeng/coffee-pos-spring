@@ -9,4 +9,9 @@ import com.gic23.coffee_pos.entity.category;
 
 public interface categoryRepo extends JpaRepository<category, Integer> {
     category findByCode(String code);
+
+    List<category> findBytypeId(Integer typeId);
+
+    @Query(value = "SELECT MAX(id) + 1 AS next_id FROM category", nativeQuery = true)
+    Long getNewId();
 }

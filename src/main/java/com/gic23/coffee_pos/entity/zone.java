@@ -1,6 +1,7 @@
 package com.gic23.coffee_pos.entity;
 
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 import org.hibernate.annotations.CreationTimestamp;
@@ -35,7 +36,7 @@ public class zone {
 
     @JsonIgnoreProperties("zone")
     @OneToMany(mappedBy = "zone", cascade = CascadeType.ALL)
-    private List<invoice> invoices;
+    private List<invoice_detail> invoiceDetails;
 
     @CreationTimestamp
     private LocalDate created;

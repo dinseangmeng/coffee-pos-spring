@@ -1,5 +1,6 @@
 package com.gic23.coffee_pos.entity;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 import org.hibernate.annotations.CreationTimestamp;

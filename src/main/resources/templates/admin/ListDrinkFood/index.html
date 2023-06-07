@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css}" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <script th:src="@{https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js}" integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V" crossorigin="anonymous"></script>
+    <script th:src="@{https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js}" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+    
+    
+    <link rel="stylesheet" th:href="@{/admin/ListDrinkFood/css/style.css}">
+    <script th:src="@{/admin/ListDrinkFood/js/app.js}" defer></script>
+    
+    
+    <title>List drinks</title>
+</head>
+<body>
+    <div id="container">
+        <div class="menu_bar">
+            <div class="menu_item">
+                <a th:href="@{/v1/cp/user/view/new}" >New Casheir</a>
+                
+            </div>
+            <div class="menu_item">
+                <a href="#" >New Drinks</a>
+                
+            </div>
+            <div class="menu_item">
+                <a href="#" >New Food</a>
+                
+            </div>
+            <div class="menu_item">
+                <a href="#" >New Category</a>
+                
+            </div>
+            <div class="menu_item">
+                <a href="#" >Order History</a>
+                
+            </div>
+            <div class="menu_item">
+                <a href="#" >Manage Table</a>
+                
+            </div>
+            
+        </div>
+        <div id="sub_container">
+            <div class="left">
+                <div class="tap_container">
+                    <div class="tap ">
+                        <a  th:href="@{/v1/cp/user/view}">Cashier</a>
+                    </div>
+                    <div class="tap" th:classAppend="${typeId==2}?'active':''" >
+                        <a th:href="@{/v1/cp/drinkFood/view/2}">Drink</a>
+                    </div>
+                    <div class="tap" th:classAppend="${typeId==1}?'active':''">
+                        <a th:href="@{/v1/cp/drinkFood/view/1}">Foods</a>
+                    </div>
+                </div>
+                <div class="table">
+                    
+                    <table>
+                        <tr >
+                            <th ></th>
+                            <th>Drink Code</th>
+                            <th>Drink name</th>
+                            <th>Action</th>
+                        </tr>
+                        <tr th:each="item,iter:${products}" style="cursor: pointer;" th:data-typeId="${typeId}" th:data-id="${item.id}" onclick="handleClick(event)">
+                            <td th:text="${iter.index+1}" th:data-typeId="${typeId}" th:data-id="${item.id}" onclick="handleClick(event)"></td>
+                            <td th:text="${item.code}" th:data-typeId="${typeId}" th:data-id="${item.id}" onclick="handleClick(event)"></td>
+                            <td th:text="${item.name}" th:data-typeId="${typeId}" th:data-id="${item.id}" onclick="handleClick(event)"></td>
+                            
+                            <td class="action">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
+                                </svg>  
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 delete">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
+                                </svg>
+                                
+                            </td>
+                        </tr>
+                        
+                        
+                    </table>
+                </div>
+            </div>
+            <div class="right">
+                <h1 th:text="${typeId==2} ? 'Drink infor' : 'Food infor'"></h1>
+                <div class="infor" th:if="${productDetail}" th:style="${typeId==2}?'--col-nums:2':'--col-nums:1'">
+                    <div class="infor_left" >
+                        <div class="img">
+                            
+                            <img th:src="@{'/images'+${productDetail.imagePath}}" alt="avatar">
+                            
+                        </div>
+                        
+                    </div>
+                    <div class="infor_right" th:if="${typeId==2}">   
+                        <div class="infor_right_1">
+                            <div>Code</div>
+                            <div>Name</div>
+                            <div>Category</div>
+                            <div>Price
+                                <div th:each="item:${productDetail.sizes}" ><br></div>
+                            </div>
+                            <div>Order</div>
+                            <br>
+                            <div>Note</div>
+                        </div>
+                        <div class="infor_right_2">
+                            <div>:</div>
+                            <div>:</div>
+                            <div>:</div>
+                            <div>:
+                                <div th:each="item:${productDetail.sizes}" ><br></div>
+                            </div>
+                            <div>:
+                                
+                            </div>
+                            <br>
+                            <div>:</div>
+                        </div>
+                        <div class="infor_right_3">
+                            <div th:text="${productDetail.code}"></div>
+                            <div th:text="${productDetail.name}"></div>
+                            <div th:text="${productDetail.category.name}"></div>
+                            <div> 
+                                <li th:each="item:${productDetail.sizes}" th:text="${item.size.short_name+':'+item.price+'$'}  "></li>
+                            </div>
+                            <br>
+                            <div th:text="${n_order + ' order'}"></div>
+                            <br>
+                            <div th:text="${productDetail.noted}"></div>
+                        </div>
+                    </div>
+                    <div class="infor_right"  th:if="${typeId==1}">   
+                        <div class="data">
+                            <div class="infor_right_data_label">
+                                <div>Code</div>
+                                <div>Name</div>
+                                <div>Category</div>
+                            </div>
+                            <div class="infor_right_data_label">
+                                <div>:</div>
+                                <div>:</div>
+                                <div>:</div>
+                            </div>
+                            <div th:text="${productDetail.code}"></div>
+                            <div th:text="${productDetail.name}"></div>
+                            <div th:text="${productDetail.category.name}"></div>
+                        </div>
+                        <div class="data">
+                            <div class="infor_right_data_label">
+                                <div>Price</div>
+                                <div>Orders</div> 
+                            </div>
+                            <div class="infor_right_data_label">
+                                <div>:</div>
+                                <div>:</div>
+                            </div>
+                            <div class="infor_right_data">
+                                <div style="display: flex;"> 
+                                    <span th:each="item:${productDetail.sizes}" th:text="${item.size.short_name+':'+item.price+'$'} "></span>
+                                </div>
+                                <!-- <br> -->
+                                <div th:text="${n_order + ' order'}"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="data_order" th:if="${productDetail}"> 
+                        <div class="data_label">
+                            <div class="label" style="font-weight: bold;" >Last order data</div>
+                        </div>
+                        <div>
+                            <div style="font-weight: bold;">:</div>
+                        </div>
+                        <div class="data_infor">
+                            <div class="infor_his" th:if="${lastOrder}" th:text="${lastOrder.created}"></div>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+            
+            
+
+        </div>
+    </div>
+    <script th:inline="javascript">
+        function handleClick(event){
+            let id=(event.target.getAttribute('data-id'));
+            let typeid=(event.target.getAttribute('data-typeid'));
+            
+            
+            if(id){
+                window.location.href = `/v1/cp/drinkFood/view/${typeid}/${id}`
+            }
+            // Handle the onchange event with the received value
+        }
+    </script>
+</body>
+</html>

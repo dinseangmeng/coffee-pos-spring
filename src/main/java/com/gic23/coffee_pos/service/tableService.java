@@ -9,4 +9,6 @@ public interface tableService {
     List<tables> listTable();
 
     Optional<tables> getById(Integer id);
+
+    tables save(tables table);
 }

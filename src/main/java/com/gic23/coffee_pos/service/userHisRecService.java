@@ -8,4 +8,6 @@ public interface userHisRecService {
     List<user_history_recode> list();
 
     user_history_recode save(user_history_recode user_history_recode);
+
+    user_history_recode findLastLoginOfUser(Integer userid);
 }

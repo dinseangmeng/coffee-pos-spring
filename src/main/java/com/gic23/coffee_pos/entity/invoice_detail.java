@@ -1,6 +1,7 @@
 package com.gic23.coffee_pos.entity;
 
 import java.time.LocalDate;
+import java.util.Date;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -31,13 +32,14 @@ public class invoice_detail {
     private Integer id;
 
     private Integer productId;
-    private Integer unitPrice;
+    private Double unitPrice;
     private Integer quantity;
     private Double discount;
     private Integer invoiceId;
     private Double surgarRate;
     private Integer toppingId;
-
+    private Double amount;
+    private Integer zoneId;
     private Integer sizeId;
 
     @JsonIgnoreProperties({ "orders", "sizes", "topping" })
@@ -60,9 +62,14 @@ public class invoice_detail {
     @JoinColumn(name = "sizeId", referencedColumnName = "id", insertable = false, updatable = false)
     private drink_food_size size;
 
+    @JsonIgnoreProperties("invoiceDetails")
+    @ManyToOne
+    @JoinColumn(name = "zoneId", referencedColumnName = "id", insertable = false, updatable = false)
+    private zone zone;
+
     @CreationTimestamp
-    private LocalDate created;
+    private Date created;
 
     @UpdateTimestamp
-    private LocalDate updated;
+    private Date updated;
 }

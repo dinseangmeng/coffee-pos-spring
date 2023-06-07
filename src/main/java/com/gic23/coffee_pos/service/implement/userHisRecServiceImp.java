@@ -27,4 +27,11 @@ public class userHisRecServiceImp implements userHisRecService {
         // TODO Auto-generated method stub
         return eRepository.save(user_history_recode);
     }
+
+    @Override
+    public user_history_recode findLastLoginOfUser(Integer userid) {
+        List<user_history_recode> data = eRepository.findByUseridAndStatusid(userid, 1);
+        return data.get(data.size() - 1);
+
+    }
 }

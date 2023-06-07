@@ -50,4 +50,20 @@ public class categoryServiceImp implements categoryService {
         return eRepository.findByCode(code);
     }
 
+    @Override
+    public List<CategoryWithDrinkCount> findBytypeId(Integer typeId) {
+        List<category> categories = eRepository.findBytypeId(typeId);
+        List<CategoryWithDrinkCount> newObjects = new ArrayList<>();
+        for (category item : categories) {
+            newObjects
+                    .add(
+                            CategoryWithDrinkCount
+                                    .builder()
+                                    .category(item)
+                                    .drink_count(drinkFoodService.countByCategoryCode(item.getCode()))
+                                    .build());
+        }
+        return newObjects;
+    }
+
 }

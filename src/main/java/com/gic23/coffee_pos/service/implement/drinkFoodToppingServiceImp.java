@@ -29,4 +29,10 @@ public class drinkFoodToppingServiceImp implements drinkFoodToppingService {
         return eRepository.findByProductId(productId);
     }
 
+    @Override
+    public drink_food_topping getById(Integer id) {
+        // TODO Auto-generated method stub
+        return eRepository.findById(id).get();
+    }
+
 }

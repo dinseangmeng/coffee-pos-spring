@@ -1,5 +1,6 @@
 package com.gic23.coffee_pos.entity;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -41,20 +42,21 @@ public class user {
 
     private String firstname;
     private String lastname;
-    private Date date_of_birth;
+    private LocalDate date_of_birth;
 
     @Column(unique = true)
     private String username;
 
     private String password;
     private Integer roleid;
+    private Boolean status;
     private Integer genderid;
     private String avatar;
 
     @CreationTimestamp
-    private Date createdAt;
+    private LocalDate createdAt;
     @UpdateTimestamp
-    private Date updatedAt;
+    private LocalDate updatedAt;
 
     @JsonIgnoreProperties("users")
     @ManyToOne

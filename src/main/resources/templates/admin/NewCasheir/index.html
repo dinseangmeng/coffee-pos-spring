@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/admin/NewCasheir/css/style.css}">
+    <script th:src="@{/admin/NewCasheir/js/app.js}" defer></script>
+    <title>Add / Edit Casheir</title>
+</head>
+<body>
+    <h1>New Cashier</h1>
+    <!-- <hr> -->
+    <form action="#" id="container" th:action="@{/v1/cp/user/new}" method="post" th:object="${casheir}" enctype="multipart/form-data">
+        <div class="form" th:if="${IsCasheir}">
+            <div class="form_input">
+                <input type="hidden" name="roleid" value="2" >
+                <input type="hidden" name="id" th:value="${casheir.id}" >
+                <input type="hidden" name="status" value="1" >
+                <div class="input">
+                    <label for="firstname">First name</label>
+                    <p>:</p>
+                    <input type="text" name="firstname" id="firstname" th:value="${casheir.firstname}" placeholder="First Name" required>
+                </div>
+                <div class="input">
+                    <label for="lastname">Last name</label>
+                    <p>:</p>
+                    <input type="text" name="lastname" id="lastname" th:value="${casheir.lastname}" placeholder="Last Name" required>
+                </div>
+                <div class="input">
+                    <label for="gender">Sex</label>
+                    <p>:</p>
+                    <select id="gender" name="genderid" required>
+                        <option th:value="${item.id}" th:each="item : ${genders}" th:selected="${casheir.gender.id==item.id}" th:text="${item.gender}"></option>
+                      </select>
+                </div>
+                <div class="input">
+                    <label for="dob">Date of birth</label>
+                    <p>:</p>
+                    <input type="date" name="date_of_birth" id="dob" th:value="${casheir.date_of_birth}" placeholder="Date of Birth" required>
+                </div>
+                <div class="input">
+                    <label for="username">Username</label>
+                    <p>:</p>
+                    <input type="text" name="username" id="username" th:value="${casheir.username}" placeholder="Username" required>
+                </div>
+                <div class="input password_input">
+                    <label for="password" th:value="casheir.password">Password</label>
+                    <p>:</p>
+                    <div class="input_with_icon">
+                        <input type="password" name="password" id="password" placeholder="Password" required>
+                        <div class="icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 passShow">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                              </svg>
+                              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 passHide hide">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M3.98 8.223A10.477 10.477 0 001.934 12C3.226 16.338 7.244 19.5 12 19.5c.993 0 1.953-.138 2.863-.395M6.228 6.228A10.45 10.45 0 0112 4.5c4.756 0 8.773 3.162 10.065 7.498a10.523 10.523 0 01-4.293 5.774M6.228 6.228L3 3m3.228 3.228l3.65 3.65m7.894 7.894L21 21m-3.228-3.228l-3.65-3.65m0 0a3 3 0 10-4.243-4.243m4.242 4.242L9.88 9.88" />
+                              </svg>
+                        </div>
+
+                    </div>
+                                            
+                </div>
+                <div class="btn">
+                    <button class="ok">Ok</button>
+                    <button class="cancel">Cancel</button>
+                </div>
+            </div>
+            <div class="imageInput">
+                <label for="file">
+                    <img th:src="@{/images/icons/placeHolder.png}" alt="placeholder" id="preview">
+
+                </label>
+                <input type="file" name="file" id="file" onchange="handleFileChange(event)" accept="image/png, image/gif, image/jpeg">
+            </div>
+
+        </div>
+        <div class="form" th:if="!${IsCasheir}">
+            <div class="form_input">
+                <input type="hidden" name="roleid" value="2" >
+                <input type="hidden" name="status" value="1" >
+                <div class="input">
+                    <label for="firstname">First name</label>
+                    <p>:</p>
+                    <input type="text" name="firstname" id="firstname" placeholder="First Name" required>
+                </div>
+                <div class="input">
+                    <label for="lastname">Last name</label>
+                    <p>:</p>
+                    <input type="text" name="lastname" id="lastname" placeholder="Last Name" required>
+                </div>
+                <div class="input">
+                    <label for="gender">Sex</label>
+                    <p>:</p>
+                    <select id="gender" name="genderid" required>
+                        <option th:value="${item.id}" th:each="item : ${genders}" th:text="${item.gender}"></option>
+                      </select>
+                </div>
+                <div class="input">
+                    <label for="dob">Date of birth</label>
+                    <p>:</p>
+                    <input type="date" name="date_of_birth" id="dob" placeholder="Date of Birth" required>
+                </div>
+                <div class="input">
+                    <label for="username">Username</label>
+                    <p>:</p>
+                    <input type="text" name="username" id="username" placeholder="Username" required>
+                </div>
+                <div class="input password_input">
+                    <label for="password" >Password</label>
+                    <p>:</p>
+                    <div class="input_with_icon">
+                        <input type="password" name="password" id="password" placeholder="Password" required>
+                        <div class="icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 passShow">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                              </svg>
+                              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 passHide hide">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M3.98 8.223A10.477 10.477 0 001.934 12C3.226 16.338 7.244 19.5 12 19.5c.993 0 1.953-.138 2.863-.395M6.228 6.228A10.45 10.45 0 0112 4.5c4.756 0 8.773 3.162 10.065 7.498a10.523 10.523 0 01-4.293 5.774M6.228 6.228L3 3m3.228 3.228l3.65 3.65m7.894 7.894L21 21m-3.228-3.228l-3.65-3.65m0 0a3 3 0 10-4.243-4.243m4.242 4.242L9.88 9.88" />
+                              </svg>
+                        </div>
+
+                    </div>
+                                            
+                </div>
+                <div class="btn">
+                    <button class="ok">Ok</button>
+                    <button class="cancel">Cancel</button>
+                </div>
+            </div>
+            <div class="imageInput">
+                <label for="file">
+                    <img th:src="@{/images/icons/placeHolder.png}" alt="placeholder" id="preview">
+
+                </label>
+                <input type="file" name="file" id="file" onchange="handleFileChange(event)" accept="image/png, image/gif, image/jpeg">
+            </div>
+
+        </div>
+    </form>
+</body>
+</html>
