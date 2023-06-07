@@ -10,4 +10,6 @@ public interface invoiceRepo extends JpaRepository<invoice, Integer> {
 
     invoice findByInvoiceCode(String invoiceCode);
 
+    Long countBycashierId(Integer cashierId);
+
 }

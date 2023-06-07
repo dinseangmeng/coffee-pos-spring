@@ -10,4 +10,8 @@ public interface invoiceService {
     invoice getByInvoiceCode(String invoiceCode);
 
     invoice Save(invoice invoice);
+
+    invoice getById(Integer id);
+
+    Long countBycashierId(Integer cashierId);
 }

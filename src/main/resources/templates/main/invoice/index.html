@@ -13,9 +13,12 @@
     <title>Order</title>
 </head>
 <body>
-    <div th:text="${tablecode}"></div>
+
         <div id="container">
             <div class="left">
+                <div class="type">
+                    <a th:attr="href=@{'/v1/invoice/view/'+${invoiceCode}+'/'+${item.id}}" class="type_item" th:classappend="${item.id==typeid} ? 'active' :''" th:each="item:${types}" th:text="${item.name}"></a>
+                </div>
                 <div class="scroller">
                     <div class="arrow_left">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
@@ -23,8 +26,8 @@
                           </svg>
                     </div>
                     <div class="menu">
-                            <a  th:attr="href=@{'/v1/invoice/view/'+${invoiceCode}}" th:data-count="${n_product}" class="item" th:classappend="${''==categoryCode}?  'active' :''" >All</a>
-                            <a th:attr="href=@{'/v1/invoice/view/'+${invoiceCode}} +'/' +${item.category.code}" th:data-count="${item.drink_count}" class="item" th:each="item: ${categorys}" th:text="${item.category.name}" th:classappend="${item.category.code==categoryCode}?  'active' :''"></a>
+                            <a  th:attr="href=@{'/v1/invoice/view/'+ ${invoiceCode} +'/'+${typeid}}" th:data-count="${n_product}" class="item" th:classappend="${''==categoryCode}?  'active' :''" >All</a>
+                            <a th:attr="href=@{'/v1/invoice/view/'+${invoiceCode}+'/'+${typeid}+'/' +${item.category.code}} " th:data-count="${item.drink_count}" class="item" th:each="item: ${categorys}" th:text="${item.category.name}" th:classappend="${item.category.code==categoryCode}?  'active' :''"></a>
                     </div>
                     <div class=" arrow_right">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
@@ -66,6 +69,8 @@
                             <th style="text-align: center;">Size</th>
                             <th style="text-align: center;">Quantity</th>
                             <th style="text-align: center;">unit Price</th>
+                            <th style="text-align: center;">Discount (%)</th>
+                            <th style="text-align: center;">Amount</th>
                             <th class="action">Action</th>
                         </tr>
                         <tr th:each="item , iter  : ${invoice.invoiceDetails}">
@@ -74,6 +79,8 @@
                             <td th:text="${item.size.size.short_name}" style="text-align: center;">R</td>
                             <td th:text="${item.quantity}" style="text-align: center;"></td>
                             <td th:text="${item.unitPrice}" style="text-align: center;"></td>
+                            <td th:text="${item.discount}" style="text-align: center;"></td>
+                            <td th:text="${item.amount}" style="text-align: center;"></td>
                             <td class="action">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" th:data-id='${item.product.id}' th:data-detail-id="${item.id}" th:data-name="${item.product.name}" th:data-qty="${item.quantity}" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class=" w-6 h-6 see" >
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z" />
@@ -95,7 +102,7 @@
                     <a th:href="@{/v1/tables}">Prev</a>
                     <div class="btn_right">
                         <button data-receipt>Print Recipt</button>
-                        <button>Save</button>
+                        <a th:href="@{/v1/tables}">Save</a>
                     </div>
                 </div>
             </div>
@@ -107,6 +114,7 @@
             </div>
             <input type="hidden" name="invoiceCode"  th:value="${invoiceCode}">
             <input type="hidden" name="categoryCode" th:value="${categoryCode}">
+            <input type="hidden" name="typeid" th:value="${typeid}">
             <div class="btn">
                 <button class="cancel">Cancel</button>
                 <button class="edit_invoice_detail">Ok</button>
@@ -116,17 +124,17 @@
         <div class="popup_calculator">
             <div class="calculator">
                 <div class="screen">
-                    <p data-screen>00.00</p>
+                    <p data-screen class="receiveMoney">00.00</p>
                     <div class="output">
                         <div class="total">
                             <div class="label">
                                 Total:
                             </div>
-                            <span th:data-total="${invoice.totalPrice}" th:text="${invoice.totalPrice}">20</span>
+                            <div type="text" th:data-total="${invoice.sub_totalPrice}" th:text="${invoice.sub_totalPrice}">20</div>
                         </div>
                         <div class="change">
                             <div class="label">Change:</div> 
-                            <span data-change="0">0.00</span>
+                            <span class="moneyChange" data-change="0">0.00</span>
                         </div>
                     </div>
                 </div>
@@ -144,10 +152,10 @@
                     <button class="number" data-number="0" data-0>0</button>
                     
                     <button class="operand delete" data-delete>Delete</button>
-                    <button class="operand ok" data-ok>Ok</button>
+                    <button class="operand ok" data-ok th:data-invoiceId="${invoice.id}" th:data-receiptId="${invoice.receipt==null ? '' : invoice.receipt.id}">Ok</button>
                     <button class="operand cancel" data-cancel>Cancel</button>
                 </div>
             </div>
-        </div>
+        </form>
 </body>
 </html>

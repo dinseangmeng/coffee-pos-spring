@@ -1,0 +1,126 @@
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+body h1 {
+  width: 100%;
+  color: black;
+  background-color: #e0e0e0;
+  font-size: 1.3rem;
+  border: 2px solid black;
+}
+body #container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  border: 2px solid black;
+  border-top: none;
+}
+body #container .form {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  place-items: center;
+  background-color: #e0e0e0;
+}
+body #container .form .form_input {
+  width: 70%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+}
+body #container .form .form_input .input {
+  width: 100%;
+}
+body #container .form .form_input .input {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+body #container .form .form_input .input svg {
+  --size:1.5rem;
+  width: var(--size);
+  height: var(--size);
+  cursor: pointer;
+}
+body #container .form .form_input .input svg.hide {
+  display: none;
+}
+body #container .form .form_input .input label {
+  width: 30%;
+}
+body #container .form .form_input .input input, body #container .form .form_input .input select {
+  width: 100%;
+  border: none;
+  outline: none;
+  padding: 0.4rem 0;
+  border-radius: 0.2rem;
+}
+body #container .form .form_input .input input[type=text], body #container .form .form_input .input input[type=password] {
+  border: none;
+  padding: 0.4rem 1rem;
+}
+body #container .form .form_input .input .input_with_icon {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+}
+body #container .form .form_input .input .input_with_icon #password {
+  width: 100%;
+  border-radius: unset;
+  border-radius: 0.2rem 0 0 0.2rem;
+}
+body #container .form .form_input .input .input_with_icon .icon {
+  height: 100%;
+  width: -moz-fit-content;
+  width: fit-content;
+  display: flex;
+  align-items: center;
+  padding: 0.12rem 0;
+  background-color: white;
+}
+body #container .form .form_input .btn {
+  display: flex;
+  gap: 1rem;
+}
+body #container .form .form_input .btn button {
+  width: 100%;
+  padding: 0.4rem 1rem;
+  border-radius: 0.2rem;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  background-color: green;
+  font-size: 1.2rem;
+  color: white;
+}
+body #container .form .form_input .btn button.cancel {
+  width: -moz-fit-content;
+  width: fit-content;
+  background-color: red;
+}
+body #container .form .imageInput {
+  display: flex;
+}
+body #container .form .imageInput label {
+  width: 100%;
+  cursor: pointer;
+}
+body #container .form .imageInput label img {
+  width: 80%;
+}
+body #container .form .imageInput input[type=file] {
+  display: none;
+}/*# sourceMappingURL=style.css.map */

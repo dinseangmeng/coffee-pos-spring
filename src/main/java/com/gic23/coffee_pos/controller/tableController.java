@@ -42,20 +42,29 @@ public class tableController {
         Optional<tables> data = tableService.getById(id);
         List<invoice> notPaidInvoice = new ArrayList<>();
         for (invoice item : data.get().getInvoices()) {
-            if (item.getStatus().getId() != 2) {
-
-                notPaidInvoice.add(item);
-            }
+            if (item.getStatus().getId() == 2)
+                continue;
+            log.info("Data test{}", item.getInvoiceCode());
+            notPaidInvoice.add(item);
         }
         // log.info("Test {}", notPaidInvoice);
         if (notPaidInvoice.size() > 0) {
-            log.info("It run here");
             invoice lastInvoice = notPaidInvoice.get((notPaidInvoice.size() - 1));
             List<invoice> invoices = new ArrayList<>(Arrays.asList(
                     lastInvoice));
             data.get().setInvoices(invoices);
+        } else {
+            data.get().setInvoices(new ArrayList<invoice>());
         }
         return ResponseEntity.ok().body(data);
+    }
+
+    @PostMapping("/free/{id}")
+    public String FreeTable(@PathVariable("id") Integer id) {
+        tables existTable = tableService.getById(id).get();
+        existTable.setStatusId(3);
+        tableService.save(existTable);
+        return "redirect:/v1/tables";
     }
 
 }

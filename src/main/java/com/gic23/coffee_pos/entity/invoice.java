@@ -1,13 +1,14 @@
 package com.gic23.coffee_pos.entity;
 
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
+import java.time.ZoneId;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -38,6 +39,7 @@ public class invoice {
     @Column(unique = true, name = "invoice_code")
     private String invoiceCode;
 
+    private Double sub_totalPrice;
     private Double totalPrice;
     private Double discount;
     private Double exchangeRate;
@@ -74,4 +76,5 @@ public class invoice {
 
     @UpdateTimestamp
     private LocalDate updated;
+
 }

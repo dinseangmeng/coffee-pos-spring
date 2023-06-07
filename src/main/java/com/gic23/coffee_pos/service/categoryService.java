@@ -10,4 +10,6 @@ public interface categoryService {
 
     category getByCode(String code);
 
+    List<CategoryWithDrinkCount> findBytypeId(Integer typeId);
+
 }

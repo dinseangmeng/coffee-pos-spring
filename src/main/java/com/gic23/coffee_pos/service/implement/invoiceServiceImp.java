@@ -19,7 +19,6 @@ public class invoiceServiceImp implements invoiceService {
 
     @Override
     public List<invoice> list() {
-        // TODO Auto-generated method stub
         return eRepository.findAll();
     }
 
@@ -30,7 +29,17 @@ public class invoiceServiceImp implements invoiceService {
 
     @Override
     public invoice Save(invoice invoice) {
-        // TODO Auto-generated method stub
         return eRepository.save(invoice);
+    }
+
+    @Override
+    public invoice getById(Integer id) {
+        return eRepository.findById(id).get();
+    }
+
+    @Override
+    public Long countBycashierId(Integer cashierId) {
+        // TODO Auto-generated method stub
+        return eRepository.countBycashierId(cashierId);
     }
 }

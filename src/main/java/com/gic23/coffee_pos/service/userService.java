@@ -5,8 +5,12 @@ import java.util.List;
 import com.gic23.coffee_pos.entity.user;
 
 public interface userService {
-    
+
     List<user> list();
-    user register(user user);
+
+    user save(user user);
+
+    user findById(Integer id);
+
     List<user> listCasheir();
 }

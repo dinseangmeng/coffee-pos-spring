@@ -12,4 +12,10 @@ public interface invoiceDetailService {
     invoice_detail save(invoice_detail invoice_detail);
 
     String deleteById(Integer id);
+
+    Double getTotalPriceByInvoiceId(Integer InvoiceId);
+
+    List<invoice_detail> listByproductId(Integer productId);
+
+    Long countByproductId(Integer productId);
 }

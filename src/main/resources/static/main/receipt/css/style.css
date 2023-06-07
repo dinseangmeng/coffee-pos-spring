@@ -1,0 +1,157 @@
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  position: relative;
+  min-width: 100vw;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  --text-color:white;
+  --bg-color:white;
+}
+@media print {
+  body {
+    /* styling goes here */
+    --text-color:rgb(0, 0, 0);
+    --bg-color:rgb(0, 0, 0);
+  }
+}
+body .container {
+  color: var(--text-color);
+  width: 30rem;
+  background-color: #d67f04;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 0.4rem;
+  padding: 1rem;
+}
+body .container > div {
+  width: 100%;
+  padding: 0 0.6rem;
+}
+body .container .title {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+}
+body .container .title h1 {
+  line-height: 1;
+}
+body .container .order_number {
+  font-size: 1.3rem;
+  text-transform: capitalize;
+}
+body .container .address .adr {
+  text-align: right;
+  font-size: 1rem;
+}
+body .container .address .adr a {
+  text-decoration: none;
+  color: var(--text-color);
+}
+body .container .order_infor {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  -moz-column-gap: 1.5rem;
+       column-gap: 1.5rem;
+}
+body .container .order_infor .infor {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+body .container .order_infor .infor .label {
+  font-weight: bold;
+}
+body .container .order_detail table {
+  width: 100%;
+}
+body .container .order_detail table tr td, body .container .order_detail table tr th {
+  text-align: left;
+}
+body .container .order_detail table tr td.qt, body .container .order_detail table tr th.qt {
+  text-align: center;
+}
+body .container .order_detail table tr td.ut_price, body .container .order_detail table tr th.ut_price {
+  text-align: right;
+}
+body .container .order_detail table tr td:last-child, body .container .order_detail table tr th:last-child {
+  text-align: right;
+}
+body .container .total_order {
+  display: flex;
+  justify-content: flex-end;
+}
+body .container .total_order table {
+  width: 60%;
+  border-collapse: collapse;
+}
+body .container .total_order table tr:nth-child(2) {
+  border-bottom: 3px solid var(--bg-color);
+}
+body .container .total_order table tr:last-child {
+  border-bottom: 10px double var(--bg-color);
+}
+body .container .total_order table tr td:first-child, body .container .total_order table tr th:first-child {
+  text-align: left;
+}
+body .container .total_order table tr td:last-child, body .container .total_order table tr th:last-child {
+  text-align: right;
+}
+body .container .footer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+body .container .footer .infor {
+  display: flex;
+  gap: 0.7rem;
+  font-size: 1.2rem;
+}
+body .container .footer .infor .label {
+  text-transform: capitalize;
+}
+body * hr {
+  width: 100%;
+  height: 2px;
+  background-color: var(--bg-color);
+  border: none;
+  outline: none;
+}
+@media print {
+  body * hr {
+    /* styling goes here */
+    border: 2px solid black;
+  }
+  .back_home{
+    display: none;
+  }
+}/*# sourceMappingURL=style.css.map */
+
+.upper{
+  text-transform: uppercase;
+}
+.back_home{
+  text-decoration: none;
+  text-transform: uppercase;
+  font-weight: bold;
+  color: black;
+  background-color: #ffb700;
+  padding: 1rem;
+  border-radius: 999px;
+  position: absolute;
+  top: 2%;
+  right: 2%;
+  transition: 300ms;
+}
+.back_home:hover{
+  box-shadow: 0 0 0 2px black;
+}

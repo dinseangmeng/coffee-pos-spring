@@ -1,10 +1,11 @@
 const btns=document.querySelector(".left")
 let data;
 let isSelected=false;
+let tableId="";
 btns.addEventListener('click',(e)=>{
     const target=e.target;
     if(target.classList.contains('btn')){
-        
+        tableId=target.getAttribute("data-id")
         document.querySelectorAll(".btn").forEach(item=>{
             item.classList.remove("active")
         })
@@ -36,13 +37,8 @@ const displayData=(tableData)=>{
     let num=0;
     if(tableData.status.status=="Busy"){
         document.querySelector(".clear").classList.remove("hide")
-        document.querySelector(".paid").classList.add("hide")
-    }else if(tableData.status.status=="Unpaid") {
-        document.querySelector(".clear").classList.add("hide")
-        document.querySelector(".paid").classList.remove("hide")
     }else{
         document.querySelector(".clear").classList.add("hide")
-        document.querySelector(".paid").classList.add("hide")
     }
     tableData.invoices.forEach(item => {
         item.invoiceDetails.forEach(i=>{
@@ -94,4 +90,14 @@ document.querySelector(".next").addEventListener("click",(e)=>{
         e.preventDefault()
         alertError()
     }
+})
+
+document.querySelector(".clear").addEventListener("click",(e)=>{
+    e.preventDefault()
+    const form =document.createElement("form")
+    form.action="/v1/tables/free/"+tableId
+    form.method="POST"
+    document.querySelector("body").appendChild(form)
+    form.submit();
+    form.remove()
 })

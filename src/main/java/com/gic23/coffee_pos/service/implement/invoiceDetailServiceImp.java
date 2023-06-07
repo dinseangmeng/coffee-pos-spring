@@ -38,4 +38,26 @@ public class invoiceDetailServiceImp implements invoiceDetailService {
         eRepository.deleteById(id);
         return "Delete Successfull";
     }
+
+    @Override
+    public Double getTotalPriceByInvoiceId(Integer InvoiceId) {
+        List<invoice_detail> invoiceDetails = eRepository.findByinvoiceId(InvoiceId);
+        Double sum = 0.0;
+        for (invoice_detail item : invoiceDetails) {
+            sum += item.getAmount();
+        }
+        return sum;
+    }
+
+    @Override
+    public List<invoice_detail> listByproductId(Integer productId) {
+        // TODO Auto-generated method stub
+        return eRepository.findByproductId(productId);
+    }
+
+    @Override
+    public Long countByproductId(Integer productId) {
+        // TODO Auto-generated method stub
+        return eRepository.countByproductId(productId);
+    }
 }

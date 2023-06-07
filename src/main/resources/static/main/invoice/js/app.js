@@ -75,7 +75,8 @@ document.querySelector(".table_invoice_infor").addEventListener("click",async (e
 
       size.forEach(item=>{
         let tmptext;
-        if(item.sizeId==invoice_detail.sizeId){
+        console.log(item,invoice_detail.sizeId,item.sizeId==invoice_detail.sizeId);
+        if(item.id==invoice_detail.sizeId){
            tmptext=`
           <div class="size_con">
           `
@@ -110,7 +111,7 @@ document.querySelector(".table_invoice_infor").addEventListener("click",async (e
 
 
       topping.forEach(item=>{
-        if(item.toppingId==invoice_detail.toppingId){
+        if(item.id==invoice_detail.toppingId){
           toppingText+=`<option value="${item.id}" selected>${item.topping.name}</option>\n`
           
         }else{
@@ -371,6 +372,7 @@ document.querySelector(".popup_container").addEventListener("click",(e)=>{
 })
 
 document.querySelector('.cal_btn').addEventListener('click',(e)=>{
+  e.preventDefault()
   const target=e.target;
   if(target.hasAttribute('data-number')){
     if(screenText=='00.00'){
@@ -390,6 +392,7 @@ document.querySelector('.cal_btn').addEventListener('click',(e)=>{
 })
 
 document.querySelector('[data-delete]').addEventListener('click',(e)=>{
+  e.preventDefault()
   if(screenText=='' || screenText=='00.00' ){
     screenText='00.00'
     return
@@ -401,15 +404,18 @@ document.querySelector('[data-delete]').addEventListener('click',(e)=>{
   displayNumber(screenText)
 })
 
-document.querySelector('[data-cancel]').addEventListener('click',()=>{
+document.querySelector('[data-cancel]').addEventListener('click',(e)=>{
+  e.preventDefault()
   calculatorOff()
 })
 
 
 const displayNumber=(Text)=>{
+  // e.preventDefault()
   document.querySelector('[data-screen]').innerText=Text;
   if(Text!='00.00'){
-    document.querySelector('[data-change]').innerText=eval(`${Text}-${document.querySelector('[data-total]').getAttribute('data-total')}`)
+    document.querySelector('[data-change]').setAttribute("data-change",eval(`${Text}-${document.querySelector('[data-total]').getAttribute('data-total')}`).toFixed(2))
+    document.querySelector('[data-change]').innerText=eval(`${Text}-${document.querySelector('[data-total]').getAttribute('data-total')}`).toFixed(2);
 
   }else{
     document.querySelector('[data-change]').innerText='00.00'
@@ -447,7 +453,7 @@ const getKeyName=(keyName)=>{
 }
 keyEvent()
 
-document.querySelector('[data-receipt').addEventListener('click',()=>{
+document.querySelector('[data-receipt]').addEventListener('click',()=>{
     calculatorShow()
 })
 
@@ -472,4 +478,47 @@ const calculatorOff=()=>{
 document.querySelector(".cancel").addEventListener("click",(e)=>{
   e.preventDefault()
   document.querySelector('.popup').style.display="none"
+})
+
+document.querySelector(".ok").addEventListener("click",(e)=>{
+  e.preventDefault()
+  let moneyChange=document.querySelector(".moneyChange")
+  let receiveMoney=document.querySelector(".receiveMoney")
+
+  if(moneyChange.getAttribute("data-change")<=0) return 
+
+  const form=document.createElement("form")
+  form.method="POST"
+  form.action=`/v1/receipt/new`
+
+  var moneyChangeInput = document.createElement("input");
+  moneyChangeInput.type = "hidden";
+  moneyChangeInput.name = "changeMoney";
+  moneyChangeInput.value = moneyChange.getAttribute("data-change");
+
+  var receiveMoneyInput = document.createElement("input");
+  receiveMoneyInput.type = "hidden";
+  receiveMoneyInput.name = "receiveMoney";
+  receiveMoneyInput.value = receiveMoney.innerText;
+
+  var receiptIdInput = document.createElement("input");
+  receiptIdInput.type = "hidden";
+  receiptIdInput.name = "receiptId";
+  receiptIdInput.value = e.target.getAttribute("data-receiptid") | "-1";
+
+  var invoiceIdInput = document.createElement("input");
+  invoiceIdInput.type = "hidden";
+  invoiceIdInput.name = "invoiceId";
+  invoiceIdInput.value = e.target.getAttribute("data-invoiceid") ;
+
+  form.appendChild(moneyChangeInput);
+  form.appendChild(receiveMoneyInput);
+  form.appendChild(receiptIdInput);
+  form.appendChild(invoiceIdInput);
+
+  form.style.display="none"
+  document.querySelector("body").appendChild(form)
+  form.submit()
+  form.remove()
+
 })

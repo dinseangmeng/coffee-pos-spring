@@ -17,11 +17,13 @@ import com.gic23.coffee_pos.entity.category;
 import com.gic23.coffee_pos.entity.drink_food;
 import com.gic23.coffee_pos.entity.invoice;
 import com.gic23.coffee_pos.entity.tables;
+import com.gic23.coffee_pos.entity.type;
 import com.gic23.coffee_pos.dto.CategoryWithDrinkCount;
 import com.gic23.coffee_pos.service.implement.categoryServiceImp;
 import com.gic23.coffee_pos.service.implement.drinkFoodServiceImp;
 import com.gic23.coffee_pos.service.implement.invoiceServiceImp;
 import com.gic23.coffee_pos.service.implement.tableServiceImp;
+import com.gic23.coffee_pos.service.implement.typeServiceImp;
 
 import org.springframework.ui.Model;
 import lombok.extern.slf4j.Slf4j;
@@ -45,13 +47,26 @@ public class invoiceController {
 
     @Autowired
     private tableServiceImp tableService;
+    @Autowired
+    private typeServiceImp typeService;
 
-    @GetMapping("/view/{invoiceCode}")
-    public String invoiceView(@PathVariable String invoiceCode, Model model) {
-        invoice invoice = invoiceService.getByInvoiceCode(invoiceCode);
-        List<drink_food> drinkFoods = drinkFoodService.list();
-        List<CategoryWithDrinkCount> categorys = categoryService.list();
-        Long countProduct = drinkFoodService.countAll();
+    @GetMapping("/view/{invoiceCode}/{typeId}")
+    public String invoiceView(@PathVariable String invoiceCode, @PathVariable Integer typeId, Model model) {
+        invoice invoice;
+        try {
+            invoice = invoiceService.getByInvoiceCode(invoiceCode);
+            if (invoice == null)
+                return "404_not_found";
+        } catch (Exception err) {
+            return "404_not_found";
+        }
+        List<type> types = typeService.list();
+        List<drink_food> drinkFoods = drinkFoodService.findBytypeId(typeId);
+        List<CategoryWithDrinkCount> categorys = categoryService.findBytypeId(typeId);
+        Long countProduct = drinkFoodService.countBytypeId(typeId);
+        if (invoice.getStatusId() == 2) {
+            return "404_not_found";
+        }
         // log.info("Obj {}", categorys);
         model.addAttribute("categoryCode", "");
         model.addAttribute("n_product", countProduct);
@@ -61,18 +76,31 @@ public class invoiceController {
         model.addAttribute("products", drinkFoods);
         model.addAttribute("TextCategory", "All");
         model.addAttribute("categorys", categorys);
+        model.addAttribute("types", types);
+        model.addAttribute("typeid", typeId);
         return "main/invoice/index";
     }
 
-    @GetMapping("/view/{invoiceCode}/{categoryCode}")
-    public String invoiceView(@PathVariable String invoiceCode, @PathVariable String categoryCode, Model model) {
-        invoice invoice = invoiceService.getByInvoiceCode(invoiceCode);
+    @GetMapping("/view/{invoiceCode}/{typeId}/{categoryCode}")
+    public String invoiceView(@PathVariable String invoiceCode, @PathVariable Integer typeId,
+            @PathVariable String categoryCode, Model model) {
+        invoice invoice;
+        try {
+            invoice = invoiceService.getByInvoiceCode(invoiceCode);
+            if (invoice == null)
+                return "404_not_found";
+        } catch (Exception err) {
+            return "404_not_found";
+        }
+        List<type> types = typeService.list();
         List<drink_food> drinkFoods = drinkFoodService.findByCategoryId(categoryCode);
-        List<CategoryWithDrinkCount> categorys = categoryService.list();
-        Long countProduct = drinkFoodService.countAll();
+        List<CategoryWithDrinkCount> categorys = categoryService.findBytypeId(typeId);
+        Long countProduct = drinkFoodService.countBytypeId(typeId);
         category category = categoryService.getByCode(categoryCode);
         // log.info("Obj {}", categorys);
-
+        if (invoice.getStatusId() == 2) {
+            return "404_not_found";
+        }
         model.addAttribute("categoryCode", categoryCode);
         model.addAttribute("n_product", countProduct);
         model.addAttribute("invoiceCode", invoiceCode);
@@ -81,6 +109,8 @@ public class invoiceController {
         model.addAttribute("products", drinkFoods);
         model.addAttribute("TextCategory", category != null ? category.getName() : "");
         model.addAttribute("categorys", categorys);
+        model.addAttribute("types", types);
+        model.addAttribute("typeid", typeId);
         return "main/invoice/index";
     }
 
@@ -112,7 +142,8 @@ public class invoiceController {
                 .invoiceCode(null)
                 .statusId(1)
                 .tableId(table)
-                .totalPrice(null)
+                .sub_totalPrice(0.0)
+                .totalPrice(0.0)
                 .build();
 
         invoice savedInvoice = invoiceService.Save(newInvoice);
@@ -121,7 +152,7 @@ public class invoiceController {
         tableService.save(existedTable.get());
         savedInvoice.setInvoiceCode("ORD000" + savedInvoice.getId());
         invoiceService.Save(savedInvoice);
-        return "redirect:/v1/invoice/view/" + savedInvoice.getInvoiceCode();
+        return "redirect:/v1/invoice/view/" + savedInvoice.getInvoiceCode() + "/2";
     }
 
 }
